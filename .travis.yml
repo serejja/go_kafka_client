@@ -55,4 +55,5 @@ before_install:
 - git checkout v1.3.1 
 - ./configure 
 - sudo make install
-- ../run-tests.sh
+- cd ..
+- ./run-tests.sh
