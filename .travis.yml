@@ -25,7 +25,7 @@ before_install:
 - export SCALA_VERSION=2.10
 - export KAFKA_RELEASE=kafka_$SCALA_VERSION-$KAFKA_VERSION
 - export KAFKA_URL=https://archive.apache.org/dist/kafka/$KAFKA_VERSION/$KAFKA_RELEASE.tgz
-- export KAFKA_HOME=/tmp/$KAFKA_RELEASE
+- export KAFKA_PATH=/tmp/$KAFKA_RELEASE
 - export BROKER_ID=1
 - export HOST_IP=localhost
 - export PORT=9092
@@ -33,23 +33,11 @@ before_install:
 - export ZK_RELEASE=zookeeper-$ZK_VERSION
 - export ZK_URL=http://apache.ip-connect.vn.ua/zookeeper/zookeeper-$ZK_VERSION/$ZK_RELEASE.tar.gz
 - export ZK_HOME=/tmp/$ZK_RELEASE
-#- export GOLANG_VERSION=1.3.3
-#- export GOLANG_RELEASE=go$GOLANG_VERSION
-#- export GOLANG_URL=https://storage.googleapis.com/golang/go$GOLANG_VERSION.linux-amd64.tar.gz
-#- export GOROOT=/tmp/go
-#- export GOPATH=/
-#- export PATH=$GOROOT/bin:$PATH
-#- sudo apt-get update
-#- sudo apt-get -y install git
-#- sudo apt-get -y install mercurial
 - wget -q $KAFKA_URL -O /tmp/$KAFKA_RELEASE.tgz
 - tar xfz /tmp/$KAFKA_RELEASE.tgz -C /tmp
 - wget -q $ZK_URL -O /tmp/$ZK_RELEASE.tar.gz
 - tar -xzf /tmp/$ZK_RELEASE.tar.gz -C /tmp
 - cp $ZK_HOME/conf/zoo_sample.cfg $ZK_HOME/conf/zoo.cfg
-#- wget -q $GOLANG_URL -O /tmp/$GOLANG_RELEASE.tar.gz
-#- tar -xzf /tmp/$GOLANG_RELEASE.tar.gz -C /usr/bin
-#- mkdir -p $GOPATH/src
 - git clone https://github.com/pote/gpm.git 
 - cd gpm
 - git checkout v1.3.1 
@@ -57,14 +45,13 @@ before_install:
 - sudo make install
 - cd ..
 - $ZK_HOME/bin/zkServer.sh start
-- sed -r -i "s/(zookeeper.connect)=(.*)/\\1=$ZK_PORT_2181_TCP_ADDR/g" $KAFKA_HOME/config/server.properties
-- sed -r -i "s/(broker.id)=(.*)/\\1=$BROKER_ID/g" $KAFKA_HOME/config/server.properties
-- sed -r -i "s/#(advertised.host.name)=(.*)/\\1=$HOST_IP/g" $KAFKA_HOME/config/server.properties
-- sed -r -i "s/^(port)=(.*)/\\1=$PORT/g" $KAFKA_HOME/config/server.properties
-- $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties &
+- sed -r -i "s/(zookeeper.connect)=(.*)/\\1=$ZK_PORT_2181_TCP_ADDR/g" $KAFKA_PATH/config/server.properties
+- sed -r -i "s/(broker.id)=(.*)/\\1=$BROKER_ID/g" $KAFKA_PATH/config/server.properties
+- sed -r -i "s/#(advertised.host.name)=(.*)/\\1=$HOST_IP/g" $KAFKA_PATH/config/server.properties
+- sed -r -i "s/^(port)=(.*)/\\1=$PORT/g" $KAFKA_PATH/config/server.properties
+- $KAFKA_PATH/bin/kafka-server-start.sh $KAFKA_PATH/config/server.properties &
 - gpm install
-#- ./run-tests.sh
 
 after_script:
-- $KAFKA_HOME/bin/kafka-server-stop.sh
+- $KAFKA_PATH/bin/kafka-server-stop.sh
 - $ZK_HOME/bin/zkServer.sh stop
