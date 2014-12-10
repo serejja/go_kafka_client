@@ -54,5 +54,5 @@ before_install:
 - cd gpm
 - git checkout v1.3.1 
 - ./configure 
-- make install
+- sudo make install
 - ../run-tests.sh
