@@ -39,9 +39,9 @@ before_install:
 - export GOROOT=/usr/bin/go
 - export GOPATH=/
 - export PATH=$GOROOT/bin:$PATH
-- apt-get update
-- apt-get -y install git
-- apt-get -y install mercurial
+- sudo apt-get update
+- sudo apt-get -y install git
+- sudo apt-get -y install mercurial
 - wget -q $KAFKA_URL -O /tmp/$KAFKA_RELEASE.tgz
 - tar xfz /tmp/$KAFKA_RELEASE.tgz -C /opt
 - wget -q $ZK_URL -O /tmp/$ZK_RELEASE.tar.gz
