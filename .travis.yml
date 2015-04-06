@@ -53,6 +53,8 @@ before_install:
 - $KAFKA_PATH/bin/kafka-server-start.sh $KAFKA_PATH/config/server.properties &
 - gpm install
 
+script: go test -v -timeout 20m
+
 after_script:
 - $KAFKA_PATH/bin/kafka-server-stop.sh
 - $ZK_HOME/bin/zkServer.sh stop
